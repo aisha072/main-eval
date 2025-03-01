@@ -8,7 +8,7 @@ const Userschema = new mongoose.Schema({
     role: { type: String, Enum: ["admin", "doctor", "patient"] },
     specialization: { type: String, Enum: ["nervers", "heart", "lungs", "skin"] },
     availableDays: {
-        type: Array, Enum: [Sun, Mon, Tue, Wed, Thu, Fri, Sat]
+        type: Array, Enum: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
 
     }
 })

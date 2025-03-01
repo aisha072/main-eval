@@ -5,15 +5,23 @@ const express = require("express");
 const app = express();
 require('dotenv').config();
 const PORT = process.env.PORT || 8080;
-const mongoose =require("mongoose");
 const connectODB = require("./config/db");
-app.use(express.json())
+const authRoute = require("./routes/auth.route");
+const adminRoute = require("./routes/admin.route");
 
-app.get("/",(req,res)=>{
-    res.send("this is get route")
-})
 
-  app.listen(PORT, async()=>{
+app.use(express.json());
+
+app.use("/auth", AuthRoute)
+
+
+app.use("/admin",adminRoute)
+app.listen(PORT, async () => {
+  try {
     await connectODB()
-    console.log("server started")
-  })
+
+  } catch (err) {
+    console.log(err, "error")
+  }
+  console.log("server started")
+})
