@@ -8,9 +8,9 @@ const AuthRoute = express.Router();
 var jwt = require('jsonwebtoken');
 const secretkey = process.env.SECRECT_KEY
 
-AuthRoute.post("/auth/register", (req,res)=>{
+AuthRoute.post("/register", (req,res)=>{
     // POST /auth/register → Register a new user (admin, doctor, patient)
-    
+
     try{
         if(userpresent){
             // if user present or already register then go directly login page
@@ -20,16 +20,14 @@ AuthRoute.post("/auth/register", (req,res)=>{
             // if user not prsent or register then cratate user with hashe password
     //  register new user
             const myPlaintextPassword =req.body.password;
-            // const {email, password} =req.body;
+            const {email, password} =req.body;
             bcrypt.hash(myPlaintextPassword, saltRounds, async function(err, hash) {
                 // Store hash in your password DB.
             
                if(err){
                 res.status(404).json({msg : "something went worng"})
                }else{
-                // everythhing well then hashing the paswrod and save in db send register succesfully.
-                 const {email, password} =req.body;
-                 console.log()
+                // everythhing well then hashing the paswrod and save in db send register succesful
                 await userModel.create({...req.body,password:hash})
                 res.status(201).json({msg: "register succesfully"})
                }
@@ -38,6 +36,7 @@ AuthRoute.post("/auth/register", (req,res)=>{
             });
         }
     }catch(err){
+        res.send("something went wrong plaese try again")
         console.log("something went wrong plaese try again")
     }
   
